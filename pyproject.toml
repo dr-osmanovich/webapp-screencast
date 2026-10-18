@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "screencraft"
+version = "0.1.0"
+description = "Open-source, scriptable Screen-Studio-style product videos for web apps: headless 60 fps capture, spring camera, re-rendered cursor, wallpaper stage."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [{ name = "Aron Osmanovich" }]
+keywords = ["screen recording", "product video", "demo video", "playwright", "hyperframes", "auto zoom", "screen studio"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Multimedia :: Video",
+]
+dependencies = ["playwright>=1.45"]
+
+[project.scripts]
+screencraft = "screencraft.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/dr-osmanovich/screencraft"
+Issues = "https://github.com/dr-osmanovich/screencraft/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+screencraft = ["assets/*", "templates/*", "examples/*/*", "examples/*/*/*"]

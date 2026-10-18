@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notely — demo app for screencraft</title>
+<style>
+  :root { color-scheme: light; --accent: #5444E6; --accent-soft: #EFEDFF; --text: #28283F; --text-2: #62627B; --border: #D9D9E3; --bg: #EFEFF4; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: #fff; border-bottom: 1px solid var(--border); }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+  .logo span { color: var(--accent); }
+  nav a { margin-left: 22px; color: var(--text-2); text-decoration: none; font-weight: 500; }
+  nav a.active { color: var(--text); }
+  main { max-width: 1120px; margin: 36px auto; padding: 0 24px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; }
+  .card { background: #fff; border-radius: 20px; padding: 26px 28px; box-shadow: 0 8px 30px rgba(40,40,63,.06); }
+  h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: -0.01em; }
+  h2 { margin: 0 0 14px; font-size: 18px; }
+  .muted { color: var(--text-2); font-size: 14px; }
+  textarea { width: 100%; min-height: 120px; margin-top: 16px; padding: 14px 16px; border: 2px solid var(--border); border-radius: 14px; font: inherit; resize: vertical; outline: none; }
+  textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .row { display: flex; gap: 12px; align-items: center; margin-top: 14px; }
+  button { font: inherit; font-weight: 600; border-radius: 12px; border: 1px solid transparent; padding: 11px 18px; cursor: pointer; }
+  .primary { background: var(--accent); color: #fff; }
+  .primary:disabled { opacity: .55; cursor: default; }
+  .ghost { background: #fff; border-color: var(--border); color: var(--text); }
+  .notes { display: grid; gap: 12px; margin-top: 18px; }
+  .note { position: relative; border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px 14px 18px; background: #fff; opacity: 0; transform: translateY(10px); transition: opacity .35s ease, transform .35s ease; }
+  .note.in { opacity: 1; transform: none; }
+  .note::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 4px; border-radius: 4px; background: var(--accent); }
+  .note b { display: block; font-size: 14px; color: var(--accent); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .06em; }
+  .note .pin { position: absolute; right: 12px; top: 12px; width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--border); background: #fff; display: grid; place-items: center; }
+  .note.pinned .pin { background: var(--accent-soft); border-color: var(--accent); }
+  .pin svg { width: 18px; height: 18px; fill: none; stroke: var(--text-2); stroke-width: 2; }
+  .note.pinned .pin svg { stroke: var(--accent); }
+  .status { margin-top: 12px; font-size: 14px; color: #256A44; display: none; }
+  .status.show { display: block; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: var(--accent-soft); color: #3E30BB; border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 500; }
+  .archive { grid-column: 1 / -1; }
+  .item { display: flex; justify-content: space-between; padding: 14px 4px; border-top: 1px solid var(--border); }
+  .item:hover { background: #F7F7FA; }
+  .item small { color: var(--text-2); }
+  .tip { position: relative; }
+  .tip .bubble { position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%); background: #28283F; color: #fff; font-size: 13px; padding: 7px 11px; border-radius: 8px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .tip:hover .bubble { opacity: 1; }
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; display: none; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .busy .spinner { display: inline-block; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Note<span>ly</span></div>
+  <nav><a class="active" href="#">Today</a><a href="#">Archive</a><a href="#">Settings</a></nav>
+</header>
+<main>
+  <section class="card">
+    <h1>What happened today?</h1>
+    <div class="muted">Write it as one paragraph. Notely turns it into cards.</div>
+    <textarea id="entry" placeholder="Type here…"></textarea>
+    <div class="row">
+      <button id="make" class="primary"><span class="spinner"></span> Turn into notes</button>
+      <button id="clear" class="ghost">Clear</button>
+      <span id="status" class="status">✓ 3 notes created</span>
+    </div>
+    <div id="notes" class="notes"></div>
+  </section>
+  <aside>
+    <section class="card">
+      <h2>Tags</h2>
+      <div class="tags"><span class="tag">team</span><span class="tag">health</span><span class="tag">reading</span><span class="tag">ideas</span><span class="tag">follow-up</span></div>
+    </section>
+    <section class="card" style="margin-top:24px">
+      <h2>Streak</h2>
+      <div class="muted">You wrote on <b>12</b> of the last 14 days.</div>
+    </section>
+  </aside>
+  <section class="card archive" id="archive">
+    <h2>Archive</h2>
+    <div class="muted">Earlier entries. Hover a row for details.</div>
+    <div id="items"></div>
+  </section>
+</main>
+<script>
+  const entry = document.getElementById('entry'), make = document.getElementById('make'), notes = document.getElementById('notes'), status = document.getElementById('status');
+  const PIN = '<svg viewBox="0 0 24 24"><path d="M12 17v5M8 7h8l-1 6h2l-5 4-5-4h2z"/></svg>';
+  make.addEventListener('click', () => {
+    const text = entry.value.trim(); if (!text) return;
+    make.classList.add('busy'); make.disabled = true;
+    setTimeout(() => {
+      const parts = text.split(/(?<=[.!?])\s+/).filter(Boolean).slice(0, 3);
+      const kinds = ['Meeting', 'Idea', 'Follow-up'];
+      notes.innerHTML = '';
+      parts.forEach((p, i) => {
+        const n = document.createElement('div'); n.className = 'note'; n.id = 'note-' + (i + 1);
+        n.innerHTML = `<b>${kinds[i] || 'Note'}</b>${p}<span class="pin tip" role="button" aria-label="Pin note">${PIN}<span class="bubble">Pinned notes stay on top</span></span>`;
+        n.querySelector('.pin').addEventListener('click', () => n.classList.toggle('pinned'));
+        notes.appendChild(n); requestAnimationFrame(() => setTimeout(() => n.classList.add('in'), 120 * i));
+      });
+      status.textContent = `✓ ${parts.length} notes created`; status.classList.add('show');
+      make.classList.remove('busy'); make.disabled = false;
+    }, 700);
+  });
+  document.getElementById('clear').addEventListener('click', () => { entry.value = ''; notes.innerHTML = ''; status.classList.remove('show'); });
+  const items = document.getElementById('items');
+  const rows = [['Planning with the design team', 'Mon'], ['Read two chapters on sleep science', 'Mon'], ['Idea: weekly digest email', 'Tue'], ['Dentist booked for the 24th', 'Tue'], ['Pairing session on the import bug', 'Wed'], ['Long walk, 9 km', 'Wed'], ['Call with the clinic about schedules', 'Thu'], ['Draft of the Q4 plan', 'Thu'], ['Reviewed three pull requests', 'Fri'], ['Groceries and meal prep', 'Fri'], ['Notes from the retro', 'Sat'], ['Sketches for the onboarding flow', 'Sat'], ['Rest day', 'Sun'], ['Reading: systems thinking', 'Sun']];
+  rows.forEach(([t, d], i) => { const r = document.createElement('div'); r.className = 'item'; r.id = 'item-' + (i + 1); r.innerHTML = `<span>${t}</span><small>${d}</small>`; items.appendChild(r); });
+</script>
+</body>
+</html>

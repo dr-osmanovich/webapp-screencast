@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="@@LANG@@">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=@@W@@, height=@@H@@" />
+    <title>@@TITLE@@</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/studio.css" />
+    <style>
+      :root { @@CSS_VARS@@ }
+      html, body, #root { width: @@W@@px; height: @@H@@px; }
+      #sc-fx { width: @@FW@@px; height: @@FH@@px; }
+      @@EXTRA_CSS@@
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="@@D@@" data-width="@@W@@" data-height="@@H@@" data-fps="@@FPS@@">
+
+      <div id="sc-world">
+        <div id="sc-wallpaper"></div>
+        <div id="sc-stage">
+          <video id="sc-take" class="clip" src="footage/take.mp4" muted playsinline preload="auto"
+            data-start="@@V0@@" data-duration="@@VD@@" data-media-start="@@MS@@" data-track-index="1"></video>
+          <div id="sc-fx">
+            <div id="sc-cur"><span class="ring"></span><svg viewBox="0 0 24 24"><path d="M3 2l7.5 19 2.6-7.6L21 10.8z" fill="#28283F" stroke="#FFFFFF" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      @@INTRO@@
+      @@OUTRO@@
+      @@TAG@@
+      <div id="sc-subs"></div>
+
+      @@AUDIO@@
+    </div>
+
+    <script src="footage/events.js"></script>
+    <script>window.SC = @@SC_JSON@@;</script>
+    <script src="assets/studio.js"></script>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      Studio.mount(tl);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

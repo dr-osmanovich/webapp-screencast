@@ -1,0 +1,22 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+dist/
+build/
+*.egg-info/
+# screencraft outputs
+out/
+logs/
+footage/
+*.mp4
+*.mov
+!docs/**/*.gif
+frames/
+# hyperframes
+**/.hyperframes/
+**/node_modules/
+**/renders/
+**/hyperframes.lock.json
+# os
+.DS_Store

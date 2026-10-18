@@ -1,0 +1,69 @@
+/* screencraft stage — tokens are set per video by `screencraft compose` on :root. */
+:root {
+  color-scheme: light;
+  --sc-font: Inter, "SF Pro Text", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sc-accent: #5444E6; --sc-accent-dark: #3E30BB; --sc-accent-soft: #EFEDFF;
+  --sc-text: #28283F; --sc-text-2: #50506A; --sc-border: #D9D9E3; --sc-surface: #FFFFFF;
+  --sc-radius: 28px;
+  --sc-wallpaper:
+    radial-gradient(900px 620px at 14% 18%, rgba(84, 68, 230, 0.50), transparent 66%),
+    radial-gradient(820px 560px at 86% 82%, rgba(45, 130, 81, 0.36), transparent 62%),
+    radial-gradient(700px 520px at 78% 12%, rgba(255, 224, 91, 0.42), transparent 60%),
+    radial-gradient(760px 540px at 22% 88%, rgba(84, 68, 230, 0.28), transparent 60%),
+    linear-gradient(135deg, #E3E0FF 0%, #ECEBF7 48%, #DCEBFF 100%);
+  --sc-stage-x: 96px; --sc-stage-y: 54px; --sc-stage-w: 1728px; --sc-stage-h: 972px; --sc-fx-scale: 0.9;
+  --sc-cursor: 56px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow: hidden; background: #EDEDF6; }
+body { font-family: var(--sc-font); color: var(--sc-text); -webkit-font-smoothing: antialiased; }
+#root { position: relative; overflow: hidden; background: #EDEDF6; }
+
+#sc-world { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; }
+#sc-wallpaper { position: absolute; inset: 0; overflow: hidden; background: var(--sc-wallpaper); }
+#sc-wallpaper::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 40%, rgba(40,40,63,0.06)); }
+#sc-stage { position: absolute; left: var(--sc-stage-x); top: var(--sc-stage-y); width: var(--sc-stage-w); height: var(--sc-stage-h);
+  border-radius: var(--sc-radius); overflow: hidden; background: var(--sc-surface);
+  box-shadow: 0 40px 90px rgba(40, 40, 63, 0.28), 0 12px 28px rgba(40, 40, 63, 0.16), 0 0 0 1px rgba(40, 40, 63, 0.10); }
+#sc-stage::after { content: ""; position: absolute; inset: 0; border-radius: var(--sc-radius); pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55); }
+#sc-take { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; object-fit: fill; background: #EFEFF4; }
+/* fx layer is authored in footage (CSS) pixels and scaled onto the stage */
+#sc-fx { position: absolute; left: 0; top: 0; transform: scale(var(--sc-fx-scale)); transform-origin: 0 0; pointer-events: none; }
+#sc-cur { position: absolute; left: 0; top: 0; width: var(--sc-cursor); height: var(--sc-cursor); opacity: 0; }
+#sc-cur svg { position: absolute; left: 0; top: 0; width: var(--sc-cursor); height: var(--sc-cursor); display: block;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.28)); transform-origin: 6px 4px; }
+#sc-cur .ring { position: absolute; left: 6px; top: 4px; width: 0; height: 0; border-radius: 50%; border: 3px solid var(--sc-accent);
+  opacity: 0; transform: translate(-50%, -50%); }
+
+.sc-callout { position: absolute; opacity: 0; background: var(--sc-surface); border: 1px solid var(--sc-border); border-radius: 14px;
+  padding: 14px 18px; font-size: 22px; font-weight: 500; line-height: 1.3; color: var(--sc-text);
+  box-shadow: 0 12px 32px rgba(40,40,63,0.16); white-space: nowrap; }
+.sc-callout::before { content: ""; position: absolute; width: 14px; height: 14px; background: var(--sc-surface);
+  border-left: 1px solid var(--sc-border); border-top: 1px solid var(--sc-border); transform: rotate(45deg); }
+.sc-callout.left::before { left: -8px; top: 50%; margin-top: -7px; }
+.sc-callout.below::before { top: -8px; left: 28px; }
+.sc-callout b { color: var(--sc-accent-dark); font-weight: 600; }
+.sc-halo { position: absolute; border-radius: 50%; border: 3px solid var(--sc-accent); opacity: 0; }
+
+/* subtitles */
+#sc-subs { position: absolute; left: 8%; right: 8%; bottom: 4%; height: 13%; z-index: 60; }
+.sc-sub { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; width: fit-content; max-width: 100%;
+  background: rgba(16, 16, 28, 0.88); color: #FFFFFF; border-radius: 18px; padding: 18px 36px;
+  font-size: 40px; font-weight: 500; line-height: 1.3; text-align: center; opacity: 0; }
+#sc-tag { position: absolute; left: 50%; top: 22px; transform: translateX(-50%); z-index: 61; height: 44px; padding: 0 18px;
+  border-radius: 12px; display: flex; align-items: center; gap: 10px; background: var(--sc-surface); border: 1px solid var(--sc-border);
+  font-size: 19px; font-weight: 500; color: var(--sc-text-2); white-space: nowrap; }
+#sc-tag i { width: 10px; height: 10px; border-radius: 5px; background: #E96120; display: block; }
+
+/* title cards */
+.sc-card { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F7F7FA 60%, var(--sc-accent-soft) 100%); z-index: 20; }
+.sc-card .t1 { font-size: 84px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--sc-text); text-align: center; max-width: 80%; }
+.sc-card .t1 b { color: var(--sc-accent); font-weight: 700; }
+.sc-card .t2 { font-size: 34px; font-weight: 500; color: var(--sc-text-2); text-align: center; }
+.sc-card .mark { display: flex; align-items: center; gap: 28px; }
+.sc-card .mark img { max-height: 192px; max-width: 900px; }
+.sc-card .mark span { font-size: 112px; font-weight: 700; letter-spacing: 0.02em; color: var(--sc-text); }
+.sc-card .line { font-size: 46px; font-weight: 500; color: var(--sc-text-2); text-align: center; max-width: 75%; }
