@@ -5,7 +5,9 @@
 a rounded window on a wallpaper, subtitles and title cards. No GUI, no screen-recording permission,
 no hand on the mouse. Rerun the script when the UI changes.
 
-![demo](docs/demo-poster.jpg)
+![screencraft demo: the bundled Notely app, recorded and edited by a script](docs/demo.gif)
+
+<sub>GIF preview at 15 fps. The real output is a 1920×1080, 60 fps MP4 — run `screencraft demo` to make it yourself.</sub>
 
 ```
 scenario.py ──► screencraft record ──► footage/take.mp4 + events.json

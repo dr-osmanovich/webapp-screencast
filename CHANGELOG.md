@@ -13,7 +13,7 @@ Agent-first release.
 
 ## 0.1.0 — 2026-10-18
 
-First public version, extracted from an internal pipeline used for product videos.
+First public version.
 
 - `screencraft record`: headless 60 fps capture of a scripted web session via CDP screencast, with
   an event log of pointer, keys, scrolls, marks and element boxes.

@@ -105,7 +105,7 @@
   });
   document.getElementById('clear').addEventListener('click', () => { entry.value = ''; notes.innerHTML = ''; status.classList.remove('show'); });
   const items = document.getElementById('items');
-  const rows = [['Planning with the design team', 'Mon'], ['Read two chapters on sleep science', 'Mon'], ['Idea: weekly digest email', 'Tue'], ['Dentist booked for the 24th', 'Tue'], ['Pairing session on the import bug', 'Wed'], ['Long walk, 9 km', 'Wed'], ['Call with the clinic about schedules', 'Thu'], ['Draft of the Q4 plan', 'Thu'], ['Reviewed three pull requests', 'Fri'], ['Groceries and meal prep', 'Fri'], ['Notes from the retro', 'Sat'], ['Sketches for the onboarding flow', 'Sat'], ['Rest day', 'Sun'], ['Reading: systems thinking', 'Sun']];
+  const rows = [['Planning with the design team', 'Mon'], ['Read two chapters on sleep science', 'Mon'], ['Idea: weekly digest email', 'Tue'], ['Dentist booked for the 24th', 'Tue'], ['Pairing session on the import bug', 'Wed'], ['Long walk, 9 km', 'Wed'], ['Call with Sam about the roadmap', 'Thu'], ['Draft of the Q4 plan', 'Thu'], ['Reviewed three pull requests', 'Fri'], ['Groceries and meal prep', 'Fri'], ['Notes from the retro', 'Sat'], ['Sketches for the onboarding flow', 'Sat'], ['Rest day', 'Sun'], ['Reading: systems thinking', 'Sun']];
   rows.forEach(([t, d], i) => { const r = document.createElement('div'); r.className = 'item'; r.id = 'item-' + (i + 1); r.innerHTML = `<span>${t}</span><small>${d}</small>`; items.appendChild(r); });
 </script>
 </body>
