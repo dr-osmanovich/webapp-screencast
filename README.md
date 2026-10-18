@@ -34,7 +34,7 @@ UI change means recording again. screencraft keeps the look and makes the take a
 
 ## Quickstart
 
-Requirements: Python 3.11+, Node 20+ (HyperFrames renders through `npx`), `ffmpeg` on PATH.
+Requirements: Python 3.11+, Node 22+ (HyperFrames renders through `npx`), `ffmpeg` on PATH.
 
 ```bash
 pip install git+https://github.com/dr-osmanovich/screencraft.git

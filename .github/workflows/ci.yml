@@ -15,7 +15,7 @@ jobs:
           python-version: "3.12"
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: pip install -e .
       - run: python -m playwright install --with-deps chromium
