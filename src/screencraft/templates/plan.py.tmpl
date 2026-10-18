@@ -1,0 +1,29 @@
+"""Plan: how the footage is edited. Used by `screencraft compose`.
+
+Times are footage seconds — use ctx.m("mark") from the scenario's take.mark() calls.
+`screencraft inspect <footage>` lists every mark and box with its time/rectangle.
+"""
+
+
+def plan(ctx):
+    m = ctx.m
+    return {
+        "title": "@@TITLE@@",
+        "lang": "en",
+        # "tag": "Made with screencraft",
+        "intro": {"title": "@@TITLE@@", "subtitle": "", "duration": 1.6},
+        "outro": {"title": "@@TITLE@@", "line": "", "duration": 3.0, "overlap": 0.45},
+        "look": {"wallpaper": "violet", "accent": "#5444E6"},   # violet | mint | sunset | graphite | ocean
+        "camera": [
+            {"from": -99, "zoom": 1.0, "focus": "center"},
+            # {"from": m("type_start") - 0.8, "zoom": 1.6, "focus": ctx.center("search", 0, 60)},
+            # {"from": m("results") + 0.3, "zoom": 1.4, "focus": "results"},   # a box name
+            # {"from": m("end") - 1.0, "zoom": 1.0, "focus": "center"},
+        ],
+        "subtitles": [
+            # [m("type_start") - 0.3, m("type_end") + 0.2, "Say what the viewer sees."],
+        ],
+        # "callouts": [{"at": m("results"), "until": m("end"), "html": "<b>Instant</b> results",
+        #               "x": 900, "y": 400, "side": "below"}],
+        # "halos": [{"at": m("results"), "box": "results"}],
+    }

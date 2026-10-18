@@ -1,0 +1,46 @@
+"""Scenario: what the browser does, step by step. Recorded by `screencraft record`.
+
+Edit CONFIG, then write the storyboard in run(). Every take.* call animates the real
+cursor/keyboard and logs an event; take.mark("name") stamps a time you can use in plan.py,
+take.box("name", selector) stores an element's rectangle for the camera and callouts.
+"""
+
+CONFIG = {
+    "base_url": "@@BASE_URL@@",
+    "start_path": "/",
+    "scale": 2,                                   # 2 → 3840×2160 footage
+    "viewport": {"width": 1920, "height": 1080},
+    "locale": "en-US",
+    "cursor_start": [1150, 700],
+}
+
+
+# def login(page, cfg):            # optional: runs before start_path opens (use demo/test accounts only)
+#     page.goto(cfg["base_url"] + "/login")
+#     page.fill("input[name=email]", "demo@example.com"); page.fill("input[type=password]", "demo")
+#     page.click("button[type=submit]"); page.wait_for_load_state("networkidle")
+
+
+def prepare(page, cfg):
+    """Optional: runs after the page loaded. Hide toasts, banners, dev badges; close side panels."""
+    page.add_style_tag(content="[role=status], .toast { display: none !important; }")
+
+
+def run(take, page):
+    take.mark("hook")
+    take.hold(0.8)
+
+    # 1. click something (selector) — returns its bounding box
+    # bb = take.click("#search", dur=0.7, name="search")
+    # take.mark("type_start"); take.type("hello world", cps=30); take.mark("type_end")
+
+    # 2. wait for the app, then mark and remember a region
+    # page.wait_for_selector(".results", timeout=10000)
+    # take.mark("results"); take.box("results", ".results")
+
+    # 3. scroll an element into view and hover it
+    # row = take.scroll_into_view("#row-6", offset=420, dur=1.4)
+    # take.move(row["x"] + 40, row["y"] + row["height"] / 2, 0.7)
+
+    take.hold(1.5)
+    take.mark("end")

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0 — 2026-10-19
+
+Agent-first release.
+
+- Agent skill in `skills/screencraft/` (install: `npx skills add dr-osmanovich/screencraft`), with a
+  CLI/API reference and a recipe for pairing with /brag.
+- `--json` global flag: one JSON result object on stdout, progress on stderr; exit codes 0/1/2.
+- New commands: `init` (scaffold scenario + plan), `inspect` (marks, boxes, duration),
+  `doctor` (dependency check with fixes), `make` (whole pipeline, `--serve DIR` for static sites).
+- `AGENTS.md` for agents working on screencraft itself.
+
 ## 0.1.0 — 2026-10-18
 
 First public version, extracted from an internal pipeline used for product videos.

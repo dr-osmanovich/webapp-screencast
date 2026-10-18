@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "screencraft"
-version = "0.1.0"
+version = "0.2.0"
 description = "Open-source, scriptable Screen-Studio-style product videos for web apps: headless 60 fps capture, spring camera, re-rendered cursor, wallpaper stage."
 readme = "README.md"
 license = { text = "MIT" }

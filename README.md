@@ -45,6 +45,26 @@ screencraft demo              # records, composes and renders the bundled Notely
 `screencraft demo --skip-render` stops after capture and composition (about 40 s) if you only want to
 look at the HyperFrames project.
 
+## Use it with an AI coding agent
+
+screencraft is built to be driven by agents (Claude Code, Codex, Cursor, …). The agent reads your app's
+code, writes the scenario and plan, records, looks at stills, fixes, and renders.
+
+```bash
+npx skills add dr-osmanovich/screencraft      # installs the `screencraft` skill for your agents
+```
+
+Then ask, in the repo of your web app: *"Make a 20-second demo video of the sign-up flow with screencraft."*
+The skill ([skills/screencraft/SKILL.md](skills/screencraft/SKILL.md)) tells the agent how to find a safe
+demo state, script the take, check footage with `inspect`, review `snapshot` stills, and render. It also
+explains how to pair with [/brag](https://github.com/latent-spaces/brag): brag writes the story and copy,
+screencraft supplies the real footage.
+
+Agent-friendly CLI: `--json` before any command prints one JSON result on stdout (progress on stderr);
+`init` scaffolds `scenario.py` + `plan.py`; `inspect` lists marks and boxes; `doctor` checks dependencies
+with fixes; `make` runs record → compose → check → render → poster in one call. Exit codes: 0 ok,
+1 step failed, 2 bad input or missing dependency.
+
 ## Your own app
 
 1. **Scenario** — the storyboard as actions. Marks name the beats, boxes tell the camera where things are.
@@ -91,13 +111,15 @@ def plan(ctx):
     }
 ```
 
-3. **Run**
+3. **Run** (`screencraft init video/` writes commented templates of both files)
 
 ```bash
 screencraft record scenario.py --out out/footage
 screencraft compose plan.py --footage out/footage --out out/composition
 screencraft render out/composition --out out/video.mp4       # runs `hyperframes check` first
 screencraft poster out/video.mp4 --at 9.0                     # bake a thumbnail as frame 0
+# or all at once:
+screencraft make scenario.py plan.py --out out --base-url http://127.0.0.1:3000 --poster-at 9
 ```
 
 `screencraft snapshot out/composition --at 2,6,12 --out out/stills` gives PNG stills to review

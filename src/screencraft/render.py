@@ -9,17 +9,17 @@ from pathlib import Path
 
 def _npx() -> list[str]:
     if shutil.which("npx") is None:
-        raise SystemExit("npx not found: install Node.js 20+ (HyperFrames renders through it).")
+        raise SystemExit("npx not found: install Node.js 22+ (HyperFrames renders through it).")
     return ["npx", "--yes", "hyperframes"]
 
 
-def check(composition_dir: Path) -> int:
+def check(composition_dir: Path, stdout=None) -> int:
     """Run ``hyperframes check`` (lint + layout + contrast). Returns the exit code."""
-    return subprocess.run(_npx() + ["check"], cwd=composition_dir).returncode
+    return subprocess.run(_npx() + ["check"], cwd=composition_dir, stdout=stdout).returncode
 
 
 def render(composition_dir: Path, out: Path, *, fps: int = 60, quality: str = "delivery",
-           frames_cache_dir: Path | None = None, extra: list[str] | None = None) -> int:
+           frames_cache_dir: Path | None = None, extra: list[str] | None = None, stdout=None) -> int:
     out = Path(out).resolve()
     out.parent.mkdir(parents=True, exist_ok=True)
     cmd = _npx() + ["render", "--fps", str(fps), "--quality", quality, "--video-frame-format", "png", "--output", str(out)]
@@ -28,12 +28,12 @@ def render(composition_dir: Path, out: Path, *, fps: int = 60, quality: str = "d
     if extra:
         cmd += extra
     env = dict(os.environ)
-    return subprocess.run(cmd, cwd=composition_dir, env=env).returncode
+    return subprocess.run(cmd, cwd=composition_dir, env=env, stdout=stdout).returncode
 
 
-def snapshot(composition_dir: Path, at: list[float], out: Path) -> int:
+def snapshot(composition_dir: Path, at: list[float], out: Path, stdout=None) -> int:
     cmd = _npx() + ["snapshot", "--at", ",".join(f"{t:g}" for t in at), "--no-end", "-o", str(Path(out).resolve())]
-    return subprocess.run(cmd, cwd=composition_dir).returncode
+    return subprocess.run(cmd, cwd=composition_dir, stdout=stdout).returncode
 
 
 def bake_poster(video: Path, at: float, *, jpg: Path | None = None, crf: int = 16) -> Path:
