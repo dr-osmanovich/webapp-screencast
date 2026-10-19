@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Fix: `record` no longer fails on a take where the page paints only once (a static page, or the
+  `init` scaffold as written). It now fails only when no frame arrives; CI agent flow is green again.
+
 ## 0.3.0 — 2026-10-19
 
 Renamed from screencraft to **webapp-screencast**. No behaviour changes.

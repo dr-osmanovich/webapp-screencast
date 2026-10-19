@@ -181,8 +181,8 @@ class Take:
         self.hold(tail_hold)
         self.cdp.send("Page.stopScreencast")
         fr = self.frames
-        if len(fr) < 2:
-            raise RuntimeError("too few frames captured; did the page paint?")
+        if not fr:   # a static page paints once; the tail hold below stretches that frame
+            raise RuntimeError("no frames captured; did the page paint?")
         t0 = fr[0][0]
         # A static tail paints no frames: hold the last frame until the last logged event.
         last_event = max((e["t"] for e in self.events), default=fr[-1][0])
