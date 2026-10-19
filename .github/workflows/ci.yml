@@ -19,14 +19,14 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: pip install -e .
       - run: python -m playwright install --with-deps chromium
-      - run: screencraft --json doctor
+      - run: webapp-screencast --json doctor
       - name: capture + compose the bundled demo
-        run: screencraft --json demo --skip-render --out out/demo
+        run: webapp-screencast --json demo --skip-render --out out/demo
       - name: agent flow (init + make on the demo app)
         run: |
-          screencraft --json init out/agent --base-url http://127.0.0.1:1
-          screencraft --json make out/agent/scenario.py out/agent/plan.py --out out/agent/out \
-            --serve src/screencraft/examples/demo-app --skip-render
+          webapp-screencast --json init out/agent --base-url http://127.0.0.1:1
+          webapp-screencast --json make out/agent/scenario.py out/agent/plan.py --out out/agent/out \
+            --serve src/webapp_screencast/examples/demo-app --skip-render
       - name: hyperframes check
         run: npx --yes hyperframes check
         working-directory: out/demo/composition

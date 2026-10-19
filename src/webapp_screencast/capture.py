@@ -24,12 +24,12 @@ from playwright.sync_api import Page, sync_playwright
 
 # Hardware GPU inside headless Chromium. On macOS (Metal via ANGLE) a busy page repaints at ~30 fps
 # under screencast without these flags and 55-62 fps with them (Apple M1). Other platforms get no
-# special flags by default; override with SCREENCRAFT_CHROMIUM_ARGS="--flag --flag".
+# special flags by default; override with WEBAPP_SCREENCAST_CHROMIUM_ARGS="--flag --flag".
 import os as _os
 import sys as _sys
 
-if _os.environ.get("SCREENCRAFT_CHROMIUM_ARGS"):
-    GPU_ARGS = _os.environ["SCREENCRAFT_CHROMIUM_ARGS"].split()
+if _os.environ.get("WEBAPP_SCREENCAST_CHROMIUM_ARGS"):
+    GPU_ARGS = _os.environ["WEBAPP_SCREENCAST_CHROMIUM_ARGS"].split()
 elif _sys.platform == "darwin":
     GPU_ARGS = ["--ignore-gpu-blocklist", "--enable-gpu-rasterization", "--use-gl=angle", "--use-angle=metal", "--enable-zero-copy"]
 else:

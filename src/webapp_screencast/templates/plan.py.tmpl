@@ -1,7 +1,7 @@
-"""Plan: how the footage is edited. Used by `screencraft compose`.
+"""Plan: how the footage is edited. Used by `webapp-screencast compose`.
 
 Times are footage seconds — use ctx.m("mark") from the scenario's take.mark() calls.
-`screencraft inspect <footage>` lists every mark and box with its time/rectangle.
+`webapp-screencast inspect <footage>` lists every mark and box with its time/rectangle.
 """
 
 
@@ -10,7 +10,7 @@ def plan(ctx):
     return {
         "title": "@@TITLE@@",
         "lang": "en",
-        # "tag": "Made with screencraft",
+        # "tag": "Made with webapp-screencast",
         "intro": {"title": "@@TITLE@@", "subtitle": "", "duration": 1.6},
         "outro": {"title": "@@TITLE@@", "line": "", "duration": 3.0, "overlap": 0.45},
         "look": {"wallpaper": "violet", "accent": "#5444E6"},   # violet | mint | sunset | graphite | ocean

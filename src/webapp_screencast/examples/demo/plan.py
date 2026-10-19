@@ -1,6 +1,6 @@
 """Demo plan: camera, subtitles, cards and annotations for examples/demo/scenario.py.
 
-All times are footage seconds (from marks); `screencraft compose` converts them.
+All times are footage seconds (from marks); `webapp-screencast compose` converts them.
 """
 
 
@@ -9,7 +9,7 @@ def plan(ctx):
     return {
         "title": "Notely — type once, notes appear",
         "lang": "en",
-        "tag": "Made with screencraft",
+        "tag": "Made with webapp-screencast",
         "intro": {"title": "Type once. <b>Notes</b> appear.", "subtitle": "Notely · demo app", "duration": 1.6},
         "outro": {"title": "Notely", "line": "Your day, in cards.", "duration": 3.2, "overlap": 0.45,
                   "subtitle": "Notely: your day, in cards."},

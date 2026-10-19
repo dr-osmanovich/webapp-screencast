@@ -1,6 +1,6 @@
-# screencraft reference
+# webapp-screencast reference
 
-## CLI (`screencraft [--json] <command>`)
+## CLI (`webapp-screencast [--json] <command>`)
 
 | command | does | JSON result keys |
 |---|---|---|
@@ -73,7 +73,7 @@ def plan(ctx):            # ctx.m(mark), ctx.center(box, dx, dy), ctx.box(name) 
 ## Gotchas
 
 - Peak capture below ~50 fps on macOS: the default GPU flags were overridden — unset
-  `SCREENCRAFT_CHROMIUM_ARGS`. Linux repaints slower; try `SCREENCRAFT_CHROMIUM_ARGS="--use-gl=angle --use-angle=vulkan"`.
+  `WEBAPP_SCREENCAST_CHROMIUM_ARGS`. Linux repaints slower; try `WEBAPP_SCREENCAST_CHROMIUM_ARGS="--use-gl=angle --use-angle=vulkan"`.
 - Static stretches paint no frames — that's fine; frames are held.
 - Restore-on-load apps (drafts, last search): reset state or clear storage in `login`/`prepare`.
 - Rendering extracts PNGs (~2 GB per 25 s of 4K): `render --frames-cache-dir /big/disk`.

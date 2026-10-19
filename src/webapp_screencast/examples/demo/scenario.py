@@ -1,12 +1,12 @@
 """Demo scenario: the bundled Notely app (examples/demo-app). ~16 s of footage.
 
-Run via `screencraft demo`, or by hand:
+Run via `webapp-screencast demo`, or by hand:
     python3 -m http.server 8765 --directory examples/demo-app
-    screencraft record examples/demo/scenario.py --out out/demo/footage --base-url http://127.0.0.1:8765
+    webapp-screencast record examples/demo/scenario.py --out out/demo/footage --base-url http://127.0.0.1:8765
 """
 
 CONFIG = {
-    "base_url": "http://127.0.0.1:8765",   # overridden by `screencraft demo`
+    "base_url": "http://127.0.0.1:8765",   # overridden by `webapp-screencast demo`
     "start_path": "/",
     "scale": 2,
     "viewport": {"width": 1920, "height": 1080},

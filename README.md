@@ -1,4 +1,4 @@
-# screencraft
+# webapp-screencast
 
 **Scriptable, open-source product videos of web apps with the look of a dedicated screen recorder:**
 60 fps real footage, a camera that glides toward what matters, an oversized smooth cursor with click rings,
@@ -7,12 +7,12 @@ no hand on the mouse. Rerun the script when the UI changes.
 
 https://github.com/user-attachments/assets/57998534-8a88-4a6e-8bb9-924ac2681ed7
 
-<sub>The bundled Notely demo, recorded and edited by a script (1920×1080, 60 fps). Run `screencraft demo` to make it yourself.</sub>
+<sub>The bundled Notely demo, recorded and edited by a script (1920×1080, 60 fps). Run `webapp-screencast demo` to make it yourself.</sub>
 
 ```
-scenario.py ──► screencraft record ──► footage/take.mp4 + events.json
-plan.py     ──► screencraft compose ─► composition/ (HyperFrames project)
-                screencraft render ──► video.mp4  (1080p60)
+scenario.py ──► webapp-screencast record ──► footage/take.mp4 + events.json
+plan.py     ──► webapp-screencast compose ─► composition/ (HyperFrames project)
+                webapp-screencast render ──► video.mp4  (1080p60)
 ```
 
 Independent, from-scratch implementation for the **web** (anything a Chromium page can show).
@@ -21,9 +21,9 @@ MIT licensed. Not affiliated with Screen Studio or any other recorder; no code o
 ## Why
 
 Tools like Screen Studio make demos look great, but every take is a human at the mouse, and every
-UI change means recording again. screencraft keeps the look and makes the take a script:
+UI change means recording again. webapp-screencast keeps the look and makes the take a script:
 
-| | screencraft | typical GUI recorder |
+| | webapp-screencast | typical GUI recorder |
 |---|---|---|
 | Footage | real app, headless Chromium, 3840×2160 @ 60 fps | real screen |
 | Cursor | logged and re-rendered: 56 px, press feedback, click ring | re-rendered |
@@ -39,28 +39,28 @@ UI change means recording again. screencraft keeps the look and makes the take a
 Requirements: Python 3.11+, Node 22+ (HyperFrames renders through `npx`), `ffmpeg` on PATH.
 
 ```bash
-pip install git+https://github.com/dr-osmanovich/screencraft.git
+pip install git+https://github.com/dr-osmanovich/webapp-screencast.git
 playwright install chromium
-screencraft demo              # records, composes and renders the bundled Notely app → out/demo/demo.mp4
+webapp-screencast demo              # records, composes and renders the bundled Notely app → out/demo/demo.mp4
 ```
 
-`screencraft demo --skip-render` stops after capture and composition (about 40 s) if you only want to
+`webapp-screencast demo --skip-render` stops after capture and composition (about 40 s) if you only want to
 look at the HyperFrames project.
 
 ## Use it with an AI coding agent
 
-screencraft is built to be driven by agents (Claude Code, Codex, Cursor, …). The agent reads your app's
+webapp-screencast is built to be driven by agents (Claude Code, Codex, Cursor, …). The agent reads your app's
 code, writes the scenario and plan, records, looks at stills, fixes, and renders.
 
 ```bash
-npx skills add dr-osmanovich/screencraft      # installs the `screencraft` skill for your agents
+npx skills add dr-osmanovich/webapp-screencast      # installs the `webapp-screencast` skill for your agents
 ```
 
-Then ask, in the repo of your web app: *"Make a 20-second demo video of the sign-up flow with screencraft."*
-The skill ([skills/screencraft/SKILL.md](skills/screencraft/SKILL.md)) tells the agent how to find a safe
+Then ask, in the repo of your web app: *"Make a 20-second demo video of the sign-up flow with webapp-screencast."*
+The skill ([skills/webapp-screencast/SKILL.md](skills/webapp-screencast/SKILL.md)) tells the agent how to find a safe
 demo state, script the take, check footage with `inspect`, review `snapshot` stills, and render. It also
 explains how to pair with [/brag](https://github.com/latent-spaces/brag): brag writes the story and copy,
-screencraft supplies the real footage.
+webapp-screencast supplies the real footage.
 
 Agent-friendly CLI: `--json` before any command prints one JSON result on stdout (progress on stderr);
 `init` scaffolds `scenario.py` + `plan.py`; `inspect` lists marks and boxes; `doctor` checks dependencies
@@ -113,18 +113,18 @@ def plan(ctx):
     }
 ```
 
-3. **Run** (`screencraft init video/` writes commented templates of both files)
+3. **Run** (`webapp-screencast init video/` writes commented templates of both files)
 
 ```bash
-screencraft record scenario.py --out out/footage
-screencraft compose plan.py --footage out/footage --out out/composition
-screencraft render out/composition --out out/video.mp4       # runs `hyperframes check` first
-screencraft poster out/video.mp4 --at 9.0                     # bake a thumbnail as frame 0
+webapp-screencast record scenario.py --out out/footage
+webapp-screencast compose plan.py --footage out/footage --out out/composition
+webapp-screencast render out/composition --out out/video.mp4       # runs `hyperframes check` first
+webapp-screencast poster out/video.mp4 --at 9.0                     # bake a thumbnail as frame 0
 # or all at once:
-screencraft make scenario.py plan.py --out out --base-url http://127.0.0.1:3000 --poster-at 9
+webapp-screencast make scenario.py plan.py --out out --base-url http://127.0.0.1:3000 --poster-at 9
 ```
 
-`screencraft snapshot out/composition --at 2,6,12 --out out/stills` gives PNG stills to review
+`webapp-screencast snapshot out/composition --at 2,6,12 --out out/stills` gives PNG stills to review
 before a render. Iterate on `plan.py` with `compose` alone; footage stays.
 
 ### Plan reference

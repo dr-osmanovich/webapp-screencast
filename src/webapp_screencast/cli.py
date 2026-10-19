@@ -1,4 +1,4 @@
-"""screencraft command line: record → compose → render → poster, plus a self-contained demo.
+"""webapp-screencast command line: record → compose → render → poster, plus a self-contained demo.
 
 Built to be driven by coding agents as much as by people:
 - ``--json`` (before the subcommand) prints one JSON object on stdout; all progress goes to stderr.
@@ -49,7 +49,7 @@ class Fail(Exception):
 def _frames_dir(explicit: str | None, name: str) -> Path:
     if explicit:
         return Path(explicit)
-    return Path(tempfile.gettempdir()) / "screencraft-frames" / name
+    return Path(tempfile.gettempdir()) / "webapp-screencast-frames" / name
 
 
 def _clear(d: Path) -> None:
@@ -78,7 +78,7 @@ def _compose(plan: Path, footage: Path, out: Path) -> dict:
     if not plan.exists():
         raise Fail(f"plan not found: {plan}", 2)
     if not (footage / "events.json").exists():
-        raise Fail(f"no events.json in {footage}; run `screencraft record` first", 2)
+        raise Fail(f"no events.json in {footage}; run `webapp-screencast record` first", 2)
     warnings: list[str] = []
 
     def clog(msg: str) -> None:
@@ -168,7 +168,7 @@ def cmd_init(a) -> dict:
             text = text.replace(k, v)
         dst.write_text(text); written.append(str(dst))
     log("wrote " + ", ".join(written))
-    log(f"next: edit run() in scenario.py, then  screencraft make {d}/scenario.py {d}/plan.py --out {d}/out")
+    log(f"next: edit run() in scenario.py, then  webapp-screencast make {d}/scenario.py {d}/plan.py --out {d}/out")
     return {"files": written}
 
 
@@ -259,7 +259,7 @@ def _pipeline(scenario: Path, plan: Path, out: Path, *, base_url=None, serve=Non
     if not no_check:
         _check(out / "composition")
     if skip_render:
-        log(f"composition ready; render with: screencraft render {out / 'composition'} --out {out / (name + '.mp4')}")
+        log(f"composition ready; render with: webapp-screencast render {out / 'composition'} --out {out / (name + '.mp4')}")
         return res
     res["video"] = _render(out / "composition", out / f"{name}.mp4", fps=fps, quality=quality)
     if poster_at is not None:
@@ -286,8 +286,8 @@ def cmd_demo(a) -> dict:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="screencraft", description="Scriptable Screen-Studio-style videos of web apps.")
-    p.add_argument("--version", action="version", version=f"screencraft {__version__}")
+    p = argparse.ArgumentParser(prog="webapp-screencast", description="Scriptable Screen-Studio-style videos of web apps.")
+    p.add_argument("--version", action="version", version=f"webapp-screencast {__version__}")
     p.add_argument("--json", action="store_true", help="print one JSON result object on stdout; progress goes to stderr")
     sub = p.add_subparsers(dest="cmd", required=True)
 

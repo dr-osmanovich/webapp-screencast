@@ -1,7 +1,7 @@
-/* screencraft runtime — real footage on a wallpaper stage with a spring camera and a replayed cursor.
+/* webapp-screencast runtime — real footage on a wallpaper stage with a spring camera and a replayed cursor.
    Everything is a pure function of time: camera and cursor samples are precomputed at 60 fps from the
    event log (window.TAKE) and read back by one proxy tween on the paused main timeline, so any seek
-   order renders identical frames. Driven by window.SC (resolved plan from `screencraft compose`). */
+   order renders identical frames. Driven by window.SC (resolved plan from `webapp-screencast compose`). */
 (function () {
   const T = window.TAKE, SC = window.SC;
   const EV = T.events;

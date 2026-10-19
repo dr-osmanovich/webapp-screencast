@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 — 2026-10-19
+
+Renamed from screencraft to **webapp-screencast**. No behaviour changes.
+
+- Package `webapp-screencast` (import `webapp_screencast`), CLI `webapp-screencast`.
+- Repository `dr-osmanovich/webapp-screencast`; skill `webapp-screencast`
+  (`npx skills add dr-osmanovich/webapp-screencast`).
+- Environment variable `SCREENCRAFT_CHROMIUM_ARGS` is now `WEBAPP_SCREENCAST_CHROMIUM_ARGS`.
+
 ## 0.2.0 — 2026-10-19
 
 Agent-first release.

@@ -3,8 +3,8 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "screencraft"
-version = "0.2.0"
+name = "webapp-screencast"
+version = "0.3.0"
 description = "Open-source, scriptable Screen-Studio-style product videos for web apps: headless 60 fps capture, spring camera, re-rendered cursor, wallpaper stage."
 readme = "README.md"
 license = { text = "MIT" }
@@ -20,14 +20,14 @@ classifiers = [
 dependencies = ["playwright>=1.45"]
 
 [project.scripts]
-screencraft = "screencraft.cli:main"
+webapp-screencast = "webapp_screencast.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/dr-osmanovich/screencraft"
-Issues = "https://github.com/dr-osmanovich/screencraft/issues"
+Homepage = "https://github.com/dr-osmanovich/webapp-screencast"
+Issues = "https://github.com/dr-osmanovich/webapp-screencast/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-screencraft = ["assets/*", "templates/*", "examples/*/*", "examples/*/*/*"]
+webapp_screencast = ["assets/*", "templates/*", "examples/*/*", "examples/*/*/*"]

@@ -224,7 +224,7 @@ def compose(plan_path: Path, footage_dir: Path, out_dir: Path, *, log=print) -> 
     }, indent=2))
     tpl = (PKG / "templates" / "index.html").read_text()
     repl = {
-        "@@LANG@@": plan.get("lang", "en"), "@@TITLE@@": html.escape(plan.get("title", "screencraft video")),
+        "@@LANG@@": plan.get("lang", "en"), "@@TITLE@@": html.escape(plan.get("title", "webapp-screencast video")),
         "@@W@@": str(W), "@@H@@": str(H), "@@FW@@": str(cw), "@@FH@@": str(ch), "@@D@@": str(D), "@@FPS@@": str(plan.get("fps", 60)),
         "@@V0@@": str(V0), "@@VD@@": str(VD), "@@MS@@": str(round(MS, 3)),
         "@@CSS_VARS@@": _css_vars(look, stage, fx_scale), "@@EXTRA_CSS@@": plan.get("extra_css", ""),

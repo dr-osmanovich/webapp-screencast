@@ -1,11 +1,11 @@
-# How screencraft works
+# How webapp-screencast works
 
 Three stages, each a plain file you can inspect:
 
 ```
-scenario.py ──► screencraft record ──► footage/take.mp4 + events.json
-plan.py     ──► screencraft compose ─► composition/ (index.html, studio.js, footage/)
-                screencraft render ──► video.mp4   (HyperFrames: check → 60 fps H.264)
+scenario.py ──► webapp-screencast record ──► footage/take.mp4 + events.json
+plan.py     ──► webapp-screencast compose ─► composition/ (index.html, studio.js, footage/)
+                webapp-screencast render ──► video.mp4   (HyperFrames: check → 60 fps H.264)
 ```
 
 ## 1. Capture
